@@ -109,9 +109,6 @@ describe('web Server',()=>{
         expect(result.status).toEqual(404);
       });
   });
-  it('listen to port',()=>{
-    serverMod.start();
-    expect(console.log).toHaveBeenCalled();
-  });
+
  
 });
