@@ -1,0 +1,33 @@
+{
+  "name": "api-server7",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "lint": "eslint '**/*.js'",
+    "test": "jest --coverage --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sondos-401-advanced-javascript/api-server7.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sondos-401-advanced-javascript/api-server7/issues"
+  },
+  "homepage": "https://github.com/sondos-401-advanced-javascript/api-server7#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jest": "^26.0.1",
+    "supertest": "^4.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.1.0"
+  }
+}
