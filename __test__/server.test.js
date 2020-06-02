@@ -1,40 +1,36 @@
 'use strict';
 
 const {server}=require('../lib/server');
-const supertest = require('supertest');
-const mockRequest = supertest(server);
-jest.spyOn(console,'log');
+const supergoose = require('@code-fellows/supergoose');
+const mockRequest = supergoose(server);
+jest.spyOn(global.console,'log');
 
 describe('web Server',()=>{
+  let output = {
+    category: 'electronic',
+    name: 'phone',
+    display_name: 'smart phone',
+    description: 'ios',
+  };
   it('add object in product(POST)',()=>{
-    let output = {
-      category: 'electronic',
-      name: 'phone',
-      display_name: 'smart phone',
-      description: 'ios',
-    };
     return mockRequest
       .post('/products')  
       .send(output)
       .then(result =>{
-        output.id = 1;
-        expect(result.body).toEqual(output);
+        Object.keys(output).forEach(key =>{
+          expect(result.body[key]).toEqual(output[key]);
+        });
         expect(result.status).toEqual(200);
       });
   });
   it('add object in category(POST)',()=>{
-    let output = {
-      category: 'electronic',
-      name: 'phone',
-      display_name: 'smart phone',
-      description: 'ios',
-    };
     return mockRequest
       .post('/categories')  
       .send(output)
       .then(result =>{
-        output.id = 1;
-        expect(result.body).toEqual(output);
+        Object.keys(output).forEach(key =>{
+          expect(result.body[key]).toEqual(output[key]);
+        });
         expect(result.status).toEqual(200);
       });
   });
@@ -42,6 +38,9 @@ describe('web Server',()=>{
     return mockRequest
       .get('/products')
       .then(result =>{
+        Object.keys(output).forEach(key =>{
+          expect(result.body[0][key]).toEqual(output[key]);
+        });
         expect(result.status).toEqual(200);
       });
   });
@@ -49,47 +48,50 @@ describe('web Server',()=>{
     return mockRequest
       .get('/categories')
       .then(result =>{
+        Object.keys(output).forEach(key =>{
+          expect(result.body[0][key]).toEqual(output[key]);
+        });
         expect(result.status).toEqual(200);
       });
   });
   it('read id from category GET',()=>{
     return mockRequest
-      .get('/categories/1')
+      .get('/categories/5ed64e7307d94b15dee00d28')
       .then(result =>{
         expect(result.status).toEqual(200);
       });
   });
   it('read id from product GET',()=>{
     return mockRequest
-      .get('/products/1')
+      .get('/products/5ed64e7307d94b15dee00d28')
       .then(result =>{
         expect(result.status).toEqual(200);
       });
   });
   it('update on product PUT',()=>{
     return mockRequest
-      .put('/products/1')
+      .put('/products/5ed64e7307d94b15dee00d28')
       .then(result=>{
         expect(result.status).toEqual(200);
       });
   });
   it('update on category PUT',()=>{
     return mockRequest
-      .put('/categories/1')
+      .put('/categories/5ed64e7307d94b15dee00d28')
       .then(result=>{
         expect(result.status).toEqual(200);
       });
   });
   it('delete on product DELETE',()=>{
     return mockRequest
-      .delete('/products/1')
+      .delete('/products/5ed64e7307d94b15dee00d28')
       .then(result=>{
         expect(result.status).toEqual(200);
       });
   });
   it('delete on category DELETE',()=>{
     return mockRequest
-      .delete('/categories/1')
+      .delete('/categories/5ed64e7307d94b15dee00d28')
       .then(result=>{
         expect(result.status).toEqual(200);
       });
@@ -108,6 +110,17 @@ describe('web Server',()=>{
         expect(result.status).toEqual(404);
       });
   });
-
+  it('add object in category(POST)',()=>{
+    let obj = {
+      category: 'electronic',
+      name: 'phone',
+    };
+    return mockRequest
+      .post('/categories')  
+      .send(obj)
+      .then(result =>{
+        expect(result.status).toEqual(500);
+      });
+  });
  
 });
