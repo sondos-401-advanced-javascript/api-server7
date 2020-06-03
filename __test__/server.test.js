@@ -39,7 +39,7 @@ describe('web Server',()=>{
       .get('/products')
       .then(result =>{
         Object.keys(output).forEach(key =>{
-          expect(result.body[0][key]).toEqual(output[key]);
+          expect(result.body.allRecords[0][key]).toEqual(output[key]);
         });
         expect(result.status).toEqual(200);
       });
@@ -49,7 +49,7 @@ describe('web Server',()=>{
       .get('/categories')
       .then(result =>{
         Object.keys(output).forEach(key =>{
-          expect(result.body[0][key]).toEqual(output[key]);
+          expect(result.body.allRecords[0][key]).toEqual(output[key]);
         });
         expect(result.status).toEqual(200);
       });
@@ -96,16 +96,9 @@ describe('web Server',()=>{
         expect(result.status).toEqual(200);
       });
   });
-  it('should respond with 500', ()=> {
-        
-    return mockRequest.get('/bad')
-      .then(results=> {
-        expect(results.status).toBe(500);
-      }).catch(console.error);
-  });
   it('not Found',()=>{
     return mockRequest
-      .get('/set')
+      .get('/')
       .then(result=>{
         expect(result.status).toEqual(404);
       });
@@ -122,5 +115,11 @@ describe('web Server',()=>{
         expect(result.status).toEqual(500);
       });
   });
- 
+  it('500',()=>{
+    return mockRequest
+      .get('/ss')
+      .then(result=>{
+        expect(result.status).toEqual(500);
+      });
+  });
 });
